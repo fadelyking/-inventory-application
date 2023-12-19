@@ -1,30 +1,34 @@
 const Category = require("../models/category");
 const asyncHandler = require("express-async-handler");
 
-exports.item_list = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Items List");
+exports.category_list = asyncHandler(async (req, res, next) => {
+	res.send("NOT IMPLEMENTED: Category List");
 });
 
-exports.item_detail = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Item Detail");
+exports.category_detail = asyncHandler(async (req, res, next) => {
+	res.send("NOT IMPLEMENTED: Category Detail");
 });
 
-exports.item_create_get = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Items Create GET");
+exports.category_create_get = asyncHandler(async (req, res, next) => {
+	res.send("NOT IMPLEMENTED: Category Create GET");
 });
 
-exports.item_create_post = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Items Create POST");
+exports.category_create_post = asyncHandler(async (req, res, next) => {
+	res.send("NOT IMPLEMENTED: Category Create POST");
 });
 
-exports.item_create_post = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Items Delete POST");
+exports.category_delete_get = asyncHandler(async (req, res, next) => {
+	res.send("NOT IMPLEMENTED: Category Delete GET");
 });
 
-exports.item_update_get = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Item Update GET");
+exports.category_delete_post = asyncHandler(async (req, res, next) => {
+	res.send("NOT IMPLEMENTED: Category Delete POST");
 });
 
-exports.item_update_POST = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Item Update POST");
+exports.category_update_get = asyncHandler(async (req, res, next) => {
+	res.send("NOT IMPLEMENTED: Category Update GET");
+});
+
+exports.category_update_post = asyncHandler(async (req, res, next) => {
+	res.send("NOT IMPLEMENTED: Category Update POST");
 });
