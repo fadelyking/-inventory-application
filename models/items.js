@@ -6,6 +6,7 @@ const ItemsSchema = new Schema({
 	description: String,
 	_category: Schema.Types.ObjectId,
 	price: Number,
+	isbn: String,
 	stock: Number,
 });
 
