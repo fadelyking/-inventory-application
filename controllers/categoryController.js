@@ -1,8 +1,11 @@
 const Category = require("../models/category");
+const Items = require("../models/items");
 const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require("express-validator");
 
 exports.category_list = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Category List");
+	const allCategories = await Items.find().exec();
+	res.render("category_list", { title: "Category List", category_list: allCategories });
 });
 
 exports.category_detail = asyncHandler(async (req, res, next) => {
