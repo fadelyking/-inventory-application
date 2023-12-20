@@ -5,12 +5,17 @@ var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-
 const mongoose = require("mongoose");
-mongoose.set("strictQuery", "false");
-const mongodb =
-	"mongodb+srv://admin:admin@cluster0.uwhbfgl.mongodb.net/?retryWrites=true&w=majority";
-var app = express();
+mongoose.set("strictQuery", false);
+
+const dev_db_url =
+	"mongodb+srv://admin:admin@cluster0.uwhbfgl.mongodb.net/inventory-app?retryWrites=true&w=majority";
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
+
+main().catch((err) => console.log(err));
+async function main() {
+	await mongoose.connect(mongoDB);
+}
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
