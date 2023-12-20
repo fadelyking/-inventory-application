@@ -4,9 +4,8 @@ const Schema = mongoose.Schema;
 const ItemsSchema = new Schema({
 	name: String,
 	description: String,
-	_category: Schema.Types.ObjectId,
+	category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
 	price: Number,
-	isbn: String,
 	stock: Number,
 });
 
