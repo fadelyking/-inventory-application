@@ -3,13 +3,12 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Categories</title>
+		<title>Items List</title>
 	</head>
 	<body>
-		<ul>
-			<% for (category of category_list) { %>
-			<li><a href="<%=category.url %>"><%=category.name %></a></li>
-			<% } %>
-		</ul>
+		<h1><%= title %></h1>
+		<% for (item of items_list) { %>
+		<li><a href="<%=item.url %>"><%=item.name %></a></li>
+		<% } %>
 	</body>
 </html>
