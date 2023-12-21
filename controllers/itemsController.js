@@ -3,12 +3,11 @@ const Category = require("../models/category");
 const asyncHandler = require("express-async-handler");
 
 exports.item_list = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Items List");
+	const allItems = await Item.find().sort({ name: 1 }).exec();
+	res.render("item_list", { title: "Item List", items_list: allItems });
 });
 
-exports.item_detail = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Item Detail");
-});
+exports.item_detail = asyncHandler(async (req, res, next) => {});
 
 exports.item_create_get = asyncHandler(async (req, res, next) => {
 	res.send("NOT IMPLEMENTED: Items Create GET");
