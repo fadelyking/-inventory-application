@@ -9,7 +9,14 @@ exports.category_list = asyncHandler(async (req, res, next) => {
 });
 
 exports.category_detail = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Category Detail");
+	const category = await Category.findById(req.params.id).exec();
+
+	if (category === null) {
+		const err = new Error("Category not found");
+		err.status = 404;
+		return next(err);
+	}
+	res.render("category_detail", { title: "Category", category: category });
 });
 
 exports.category_create_get = asyncHandler(async (req, res, next) => {
