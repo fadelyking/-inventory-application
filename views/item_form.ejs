@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -30,8 +30,12 @@
 			<input type="submit" value="Submit" />
 		</form>
 
-
-<% if (errors) {errors.map(error => error)} %>
-
+		<% if (errors) { %>
+			<ul>
+				<% for (error of errors) { %>
+					<li><%= error %></li>
+				<% } %>
+			</ul>
+		<% } %>
 	</body>
 </html>
