@@ -70,11 +70,19 @@ exports.item_create_post = [
 ];
 
 exports.item_delete_get = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Items Delete POST");
+	const item = await Item.findById(req.params.id).populate("category").exec();
+
+	if (item === null) {
+		res.redirect("/items");
+	}
+
+	res.render("item_delete_form", { title: "Delete Item", item: item });
 });
 
 exports.item_delete_post = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Items Delete POST");
+	console.log(req.body.itemid);
+	await Item.findByIdAndDelete(req.body.itemid);
+	res.redirect("/items");
 });
 
 exports.item_update_get = asyncHandler(async (req, res, next) => {

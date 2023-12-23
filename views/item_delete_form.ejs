@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Item Delete</title>
+	</head>
+	<body>
+		<h1><%= title %></h1>
+		<h2>Are you sure you want to delete <u><%= item.name %></u>?</h2>
+
+		<form method="POST">
+			<input class="form-control" type="hidden" name="itemid" value="<%= item._id %>" />
+			<button type="submit">Delete</button>
+		</form>
+	</body>
+</html>
