@@ -19,13 +19,41 @@ exports.category_detail = asyncHandler(async (req, res, next) => {
 	res.render("category_detail", { title: "Category", category: category });
 });
 
-exports.category_create_get = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Category Create GET");
-});
+exports.category_create_get = (req, res, next) => {
+	res.render("category_form", { title: "Create Category" });
+};
 
-exports.category_create_post = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Category Create POST");
-});
+exports.category_create_post = [
+	body("name", "Must contain at least 3 characters").trim().isLength({ min: 3 }).escape(),
+	body("description", "Description must not be empty.").trim().isLength({ min: 1 }).escape(),
+
+	asyncHandler(async (req, res, next) => {
+		const errors = validationResult(req);
+
+		const category = new Category({
+			name: req.body.name,
+			description: req.body.description,
+		});
+
+		if (!errors.isEmpty()) {
+			res.render("item_form", {
+				title: "Create Item",
+				item: item,
+				errors: errors.array(),
+			});
+			return;
+		} else {
+			const categoryExists = await Category.findOne({ name: req.body.name }).exec();
+
+			if (categoryExists) {
+				res.redirect(categoryExists.url);
+			} else {
+				await category.save();
+				res.redirect(category.url);
+			}
+		}
+	}),
+];
 
 exports.category_delete_get = asyncHandler(async (req, res, next) => {
 	res.send("NOT IMPLEMENTED: Category Delete GET");
