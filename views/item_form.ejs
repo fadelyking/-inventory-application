@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Create Item</title>
 	</head>
+	<h1><%= title %></h1>
 	<body>
 		<form method="post">
 			<label for="name">Name:</label>
@@ -23,19 +24,16 @@
 			<br />
 
 			<label for="category">Category:</label>
-			<select id="category" name="category" required></select>
+			<select id="category" name="category">
+				<% for (let option of category_list) { %>
+				  <option value="<%= option._id %>"><%= option.name %></option>
+				<% } %>
+			  </select>
+			  
 
 			<br />
 
 			<input type="submit" value="Submit" />
 		</form>
-
-		<% if (errors) { %>
-			<ul>
-				<% for (error of errors) { %>
-					<li><%= error %></li>
-				<% } %>
-			</ul>
-		<% } %>
 	</body>
 </html>

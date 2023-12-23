@@ -25,9 +25,11 @@ exports.item_detail = asyncHandler(async (req, res, next) => {
 	});
 });
 
-exports.item_create_get = (req, res, next) => {
-	res.render("item_form", { title: "Create Item" });
-};
+exports.item_create_get = asyncHandler(async (req, res, next) => {
+	const allCategories = await Category.find().sort({ name: 1 }).exec();
+
+	res.render("item_form", { title: "Create Item", category_list: allCategories });
+});
 
 exports.item_create_post = [
 	body("name", "Must contain at least 3 characters").trim().isLength({ min: 3 }).escape(),
@@ -36,6 +38,7 @@ exports.item_create_post = [
 
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
+		console.log(req.body.category);
 
 		const item = new Item({
 			name: req.body.name,
@@ -45,11 +48,14 @@ exports.item_create_post = [
 		});
 
 		if (!errors.isEmpty()) {
+			console.log(errors);
 			res.render("item_form", {
 				title: "Create Item",
 				item: item,
 				errors: errors.array(),
 			});
+			console.log(errors.array());
+			return;
 		} else {
 			const itemExists = await Item.findOne({ name: req.body.name }).exec();
 
