@@ -86,9 +86,47 @@ exports.item_delete_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.item_update_get = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Item Update GET");
+	const allCategories = await Category.find().sort({ name: 1 }).exec();
+	const item = Item.findById(req.params.id).exec();
+
+	if (item === null) {
+		const err = new Error("Item not found");
+		err.status = 404;
+		return next(err);
+	}
+
+	res.render("item_form", { title: "Update Item", item: item, category_list: allCategories });
 });
 
-exports.item_update_post = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Item Update POST");
-});
+exports.item_update_post = [
+	body("name", "Must contain at least 3 characters").trim().isLength({ min: 3 }).escape(),
+	body("description", "Description must not be empty.").trim().isLength({ min: 1 }).escape(),
+	body("price", "Price must not be empty.").trim().isLength({ min: 1 }).escape(),
+
+	asyncHandler(async (req, res, next) => {
+		const errors = validationResult(req);
+		const allCategories = await Category.find().sort({ name: 1 }).exec();
+
+		const item = new Item({
+			name: req.body.name,
+			description: req.body.description,
+			price: req.body.price,
+			category: req.body.category,
+			_id: req.params.id,
+		});
+		if (!errors.isEmpty()) {
+			res.render("item_form", {
+				title: "Update Item",
+				item: item,
+				category_list: allCategories,
+				errors: errors.array(),
+			});
+			console.log(errors.array());
+			return;
+		} else {
+			console.log("trying to update");
+			await Item.findByIdAndUpdate(req.params.id, item, {});
+			res.redirect(item.url);
+		}
+	}),
+];
