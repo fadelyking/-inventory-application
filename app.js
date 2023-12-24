@@ -7,6 +7,7 @@ const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const compression = require("compression");
+const helmet = require("helmet");
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", "false");
 const dev_db_url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.uwhbfgl.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
@@ -16,8 +17,8 @@ main().catch((err) => console.log(err));
 async function main() {
 	await mongoose.connect(mongoDB);
 }
-var app = express();
-
+const app = express();
+app.use(helmet());
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
