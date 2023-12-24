@@ -1,3 +1,4 @@
+require("dotenv").config();
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
@@ -8,8 +9,8 @@ const usersRouter = require("./routes/users");
 
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", "false");
-const mongoDB =
-	"mongodb+srv://admin:admin@cluster0.uwhbfgl.mongodb.net/inventory-app?retryWrites=true&w=majority";
+const dev_db_url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.uwhbfgl.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
 
 main().catch((err) => console.log(err));
 async function main() {
