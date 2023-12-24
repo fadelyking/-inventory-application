@@ -6,6 +6,7 @@
 		<title>Items List</title>
 	</head>
 	<body>
+		<%-include('./nav') %>
 		<h1><%= title %></h1>
 		<% for (item of items_list) { %>
 		<li><a href="<%=item.url %>"><%=item.name %></a> <a href="<%= item.url + '/delete' %>">DELETE</a><a href="<%= item.url + '/update' %>">	UPDATE</a></li>
