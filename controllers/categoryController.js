@@ -92,9 +92,35 @@ exports.category_delete_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.category_update_get = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Category Update GET");
+	const allCategories = await Category.find().sort({ name: 1 }).exec();
+
+	res.render("category_form", { title: "Create Category", category_list: allCategories });
 });
 
-exports.category_update_post = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Category Update POST");
-});
+exports.category_update_post = [
+	body("name", "Must contain at least 3 characters").trim().isLength({ min: 3 }).escape(),
+	body("description", "Description must not be empty.").trim().isLength({ min: 1 }).escape(),
+
+	asyncHandler(async (req, res, next) => {
+		const errors = validationResult(req);
+
+		const category = new Category({
+			name: req.body.name,
+			description: req.body.description,
+			_id: req.params.id,
+		});
+
+		if (!errors.isEmpty()) {
+			res.render("item_form", {
+				title: "Create Category",
+				category: category,
+				errors: errors.array(),
+			});
+			return;
+		} else {
+			console.log("trying to update");
+			await Category.findByIdAndUpdate(req.params.id, category, {});
+			res.redirect(category.url);
+		}
+	}),
+];
