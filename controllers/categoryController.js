@@ -10,8 +10,9 @@ exports.category_list = asyncHandler(async (req, res, next) => {
 
 exports.category_detail = asyncHandler(async (req, res, next) => {
 	const category = await Category.findById(req.params.id).exec();
-
+	const debug = require("debug")("category");
 	if (category === null) {
+		debug(`Category not found: ${req.params.id}`);
 		const err = new Error("Category not found");
 		err.status = 404;
 		return next(err);
